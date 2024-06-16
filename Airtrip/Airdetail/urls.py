@@ -1,23 +1,23 @@
 #from django.contrib import urls
 from django.urls import path, include
-from . import views
+from .views import personview ,tripview
 
 urlpatterns=[
-path('persons/', views.personGetlist),
-path('persons/<int:pk>/', views.personGetdetail),
-path('persons/trips/', views.tripGetlist),
-path('persons/<int:pk>/trips/', views.tripsGetFulldetails),
-path('persons/<int:pk>/trips/<int:tk>/', views.tripsGetPerdetails),
-path('persons/<int:pk>/attachments/', views.personGetattachment),
-path('persons/<int:pk>/attachments/<int:tk>/', views.personGetPerattachment),
-path('person/', views.personPostlist),
-path('person/<int:pk>/', views.personPutdetail),
-path('person/attachments/', views.PersonPostattachment),
-path('person/trips/',views.tripPostlist),
-path('person/<int:pk>/trips/<int:tk>/',views.tripPutdetail),
-path('persons1/<int:pk>/',views.personDeldetail),
-path('persons1/<int:pk>/attachments/<int:tk>/',views.personDelattachment),
-path('persons1/<int:pk>/trips/',views.tripDelAlldetails),
-path('persons1/<int:pk>/trips/<int:tk>/',views.tripDelPerdetails),
+path('persons/', personview.personGetlist),
+path('persons/<int:pk>/', personview.personGetdetail),
+path('persons/trips/', tripview.tripGetlist),
+path('persons/<int:pk>/trips/', tripview.tripsGetFulldetails),
+path('persons/<int:pk>/trips/<int:tk>/', tripview.tripsGetPerdetails),
+path('persons/<int:pk>/attachments/', personview.personGetattachment),
+path('persons/<int:pk>/attachments/<int:tk>/', personview.personGetPerattachment),
+path('person/', personview.personPostlist),
+path('person/<int:pk>/', personview.personPutdetail),
+path('person/attachments/', personview.PersonPostattachment),
+path('person/trips/', tripview.tripPostlist),
+path('person/<int:pk>/trips/<int:tk>/', tripview.tripPutdetail),
+path('persons1/<int:pk>/', personview.personDeldetail),
+path('persons1/<int:pk>/attachments/<int:tk>/', personview.personDelattachment),
+path('persons1/<int:pk>/trips/', tripview.tripDelAlldetails),
+path('persons1/<int:pk>/trips/<int:tk>/', tripview.tripDelPerdetails),
 
 ]

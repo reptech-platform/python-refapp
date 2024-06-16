@@ -1,5 +1,5 @@
 from django.contrib.auth.models import User
-from .models import Person,Trip, Airline, Airport, Document,Address
+from ..models import Person,Document,Address
  
 from rest_framework import serializers
 from rest_framework.serializers import HyperlinkedModelSerializer
@@ -58,12 +58,20 @@ class PersonSerializer(serializers.ModelSerializer):
 
         # Update addressInfo if provided
         if address_info_data:
-            address_info_instance, _ = Address.objects.get_or_create(**address_info_data)
+            address_info_id = address_info_data.get('id')
+            if address_info_id
+            	address_info_instance = Address.objects.get(pk=home_address_id)
+            else	  	
+            	address_info_instance, _ = Address.objects.get_or_create(**address_info_data)
             instance.addressInfo = address_info_instance
 
         # Update homeAddress if provided
         if home_address_data:
-            home_address_instance, _ = Address.objects.get_or_create(**home_address_data)
+            home_address_id = home_address_data.get('id')
+            if home_address_id
+            	home_address_instance = Address.objects.get(pk=home_address_id)
+            else	
+            	home_address_instance, _ = Address.objects.get_or_create(**home_address_data)
             instance.homeAddress = home_address_instance
 
         # Save the changes to the instance
@@ -71,24 +79,3 @@ class PersonSerializer(serializers.ModelSerializer):
         return instance
         
 
-class DocumentSerializer(serializers.ModelSerializer):
-    class Meta:
-        model=Document
-        fields=['personId', 'document_type', 'file']
-        #fields = '__all__'
-
-class TripSerializer(serializers.ModelSerializer):
-    class Meta:
-        model=Trip
-        
-        fields = '__all__'
-
-class AirlineSerializer(serializers.ModelSerializer):
-    class Meta:
-        model=Airline
-        fields=['airlineCode', 'name', 'logo']
-
-class AirportSerializer(serializers.ModelSerializer):
-    class Meta:
-        model=Airport
-        fields=['name', 'icaoCode', 'iataCode', 'location', 'latitude', 'longitude', 'isInsideCity']
