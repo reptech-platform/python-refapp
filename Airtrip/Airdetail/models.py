@@ -30,8 +30,7 @@ class Person(models.Model):
         ('feature3', 'Feature 3'),
         ('feature4', 'Feature 4'),
     ]
-        
-
+        id=models.BigIntegerField(primary_key=True)
         userName=models.CharField(max_length=100, default=' ')
         firstName=models.CharField(max_length=100)
         lastName=models.CharField(max_length=100)

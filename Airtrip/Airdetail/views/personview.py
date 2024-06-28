@@ -22,7 +22,7 @@ def personGetlist(request):
 @api_view(['POST'])
 def personPostlist(request):
 	
-    if request.method == 'POST':
+    #if request.method == 'POST':
         serializer = PersonSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save()

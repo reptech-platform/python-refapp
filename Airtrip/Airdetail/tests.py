@@ -1,9 +1,15 @@
 from django.test import TestCase
 
 # Create your tests here.
+import os
+from django.conf import settings
+
+os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'Airtrip.Airtrip.settings')
+settings.configure()
 from rest_framework.test import APIClient
 from rest_framework import status
 import json
+
 
 class YourAPIsTestCase(TestCase):
     def setUp(self):
@@ -16,7 +22,7 @@ class YourAPIsTestCase(TestCase):
         # Test POST request to your API endpoint
         #data = {'key': 'value'}  # Provide necessary data for POST request
         data =  {
-        
+        		"id":1,
     			"userName": "Ravddldi",
     			"firstName": "Raddmfvi",
     			"lastName": "S",

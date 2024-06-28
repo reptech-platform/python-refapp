@@ -17,7 +17,7 @@ class PersonSerializer(serializers.ModelSerializer):
 	
     class Meta:
         model=Person
-        fields=['userName', 'firstName', 'lastName', 'income', 'dateOfBirth', 'middleName', 'gender', 'age','addressInfo','homeAddress','address_id','homeAddress_id']
+        fields=['pk','userName', 'firstName', 'lastName', 'income', 'dateOfBirth', 'middleName', 'gender', 'age','addressInfo','homeAddress','address_id','homeAddress_id']
        
      	
     def to_representation(self, instance):
