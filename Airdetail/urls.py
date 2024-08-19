@@ -19,5 +19,10 @@ path('persons1/<int:pk>/', personview.personDeldetail),
 path('persons1/<int:pk>/attachments/<int:tk>/', personview.personDelattachment),
 path('persons1/<int:pk>/trips/', tripview.tripDelAlldetails),
 path('persons1/<int:pk>/trips/<int:tk>/', tripview.tripDelPerdetails),
+path('persons/firstName/', personview.personnameSearchGetlist),
+path('persons/address/', personview.personaddressSearchGetlist),
+path('persons/grouping/', personview.persongroupGetlist),
+path('persons/trips/startsAt/', tripview.tripSearchGetlist),
+path('persons/<int:pk>/trips/startsAt/', tripview.tripSearchGetlist),
 
 ]

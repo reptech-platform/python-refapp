@@ -3,9 +3,9 @@ from django.test import TestCase
 # Create your tests here.
 import os
 from django.conf import settings
-
-os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'Airtrip.Airtrip.settings')
-settings.configure()
+from django.urls import reverse
+#os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'Airtrip.Airtrip.settings')
+#settings.configure()
 from rest_framework.test import APIClient
 from rest_framework import status
 import json
@@ -103,12 +103,13 @@ class YourAPIsTestCase(TestCase):
     def test_get_person_endpoint(self):
         # Test GET request to your API endpoint
         person_id=self.test_post_endpoint()
+        print(person_id)
         if person_id is None:
             print("Person ID is None. Cannot proceed.")
             return
 
-
-        response = self.client.get('http://127.0.0.1:8000/persons/{person_id}/')
+        url=reverse('127.0.0.1:8000/persons/{person_id}/', kwargs={'pk': person_id})
+        response = self.client.get(url)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         
 
@@ -121,6 +122,7 @@ class YourAPIsTestCase(TestCase):
     def test_get_tripfull_endpoint(self):
         # Test GET request to your API endpoint
         person_id=self.test_post_endpoint()
+        print(person_id)
         if person_id is None:
             print("Person ID is None. Cannot proceed.")
             return
@@ -132,6 +134,7 @@ class YourAPIsTestCase(TestCase):
     def test_get_tripper_endpoint(self):
         # Test GET request to your API endpoint
         person_id=self.test_post_endpoint()
+        print(person_id)
         if person_id is None:
             print("Person ID is None. Cannot proceed.")
             return
@@ -147,6 +150,7 @@ class YourAPIsTestCase(TestCase):
     def test_get_attachment_endpoint(self):
         # Test GET request to your API endpoint
         person_id=self.test_post_endpoint()
+        print(person_id)
         if person_id is None:
             print("Person ID is None. Cannot proceed.")
             return

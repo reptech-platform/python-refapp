@@ -5,19 +5,23 @@ from django.views.decorators.csrf import csrf_exempt
 from ..models import Person,Trip,Airline,Airport,Document,Address
 from rest_framework import serializers
 from ..serializer.tripserializer import TripSerializer
-from rest_framework.decorators import api_view
+from rest_framework.decorators import api_view,permission_classes
+from django.db.models import Q 
+from rest_framework.permissions import AllowAny
 
 # Create your views here.
  
 @csrf_exempt
 @api_view(['GET'])
+@permission_classes([AllowAny])
 def tripGetlist(request):
-        trips=Trip.objects.all()
+        trips=Trip.objects.all().order_by('budget')[:50]
         serializer=TripSerializer(trips,many=True)
         return JsonResponse(serializer.data, safe=False,status=200)
     
 @csrf_exempt
 @api_view(['POST'])
+@permission_classes([AllowAny])
 def tripPostlist(request):
         print("post method call")
         data=JSONParser().parse(request)
@@ -29,19 +33,21 @@ def tripPostlist(request):
     
 @csrf_exempt
 @api_view(['GET'])
+@permission_classes([AllowAny])
 def tripsGetFulldetails(request,pk):
     try:
         person=Person.objects.get(pk=pk)
     except Person.DoesNotExist: 
         return JsonResponse ({'error': 'Trip does not exist'}, status=404)
          
-    trips=Trip.objects.filter(personId=person)
+    trips=Trip.objects.filter(personId=person)[:50]
     serializer=TripSerializer(trips,many=True)
     return JsonResponse(serializer.data, safe=False, status=200)
 
 
 @csrf_exempt
 @api_view(['GET'])
+@permission_classes([AllowAny])
 def tripsGetPerdetails(request,pk,tk):
     try:
         person=Person.objects.get(id=pk)
@@ -54,6 +60,7 @@ def tripsGetPerdetails(request,pk,tk):
 
 @csrf_exempt
 @api_view(['PUT'])
+@permission_classes([AllowAny])
 def tripPutdetail(request,pk,tk):
 
     try:
@@ -70,6 +77,7 @@ def tripPutdetail(request,pk,tk):
 
 @csrf_exempt
 @api_view(['DELETE'])
+@permission_classes([AllowAny])
 def tripDelAlldetails(request,pk):
     try:
         person=Person.objects.get(pk=pk)
@@ -82,6 +90,7 @@ def tripDelAlldetails(request,pk):
 
 @csrf_exempt
 @api_view(['DELETE'])
+@permission_classes([AllowAny])
 def tripDelPerdetails(request,pk,tk):
 
     try:
@@ -93,5 +102,30 @@ def tripDelPerdetails(request,pk,tk):
     trips.delete()
     return JsonResponse({},status=204)
     
-
+@csrf_exempt
+@api_view(['GET'])
+@permission_classes([AllowAny])
+def tripSearchGetlist(request):
+        
+        search_query=request.GET.get('search')
+        trips=Trip.objects.all().filter(startsAt=search_query)
+        serializer=TripSerializer(trips,many=True)
+        return JsonResponse(serializer.data, safe=False,status=200)
+        
+@csrf_exempt
+@api_view(['GET'])
+@permission_classes([AllowAny])
+def tripSearchGetlist(request,pk):
+        
+    try:   
+        person=Person.objects.get(id=pk)
+        #trips=Trip.objects.get(id=tk)
+    except (Person.DoesNotExist,Trip.DoesNotExist):
+    	return JsonResponse ({},status=404)
+    	 
+    	    
+    search_query=request.GET.get('search')
+    trips=Trip.objects.all().filter(Q(startsAt=search_query) & Q(personId=person))
+    serializer=TripSerializer(trips,many=True)
+    return JsonResponse(serializer.data, safe=False,status=200)
 
